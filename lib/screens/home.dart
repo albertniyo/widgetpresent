@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
+// home screen that displays a list of fruits with add button.
+// returns only the body content
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
+  // cart items data
   final List<Map<String, String>> fruits = const [
     {
       'name': 'Apple',
@@ -33,60 +37,52 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Fruit Store',
-          style: TextStyle(color: Colors.white, fontSize: 28),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.deepPurple,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: 180,
-              margin: const EdgeInsets.all(16),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          // welcome banner with image overlay
+          Container(
+            height: 180,
+            margin: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              image: const DecorationImage(
+                image: AssetImage('assets/images/wlcm.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16),
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/wlcm.png'),
-                  fit: BoxFit.cover,
-                ),
+                color: Colors.black.withValues(alpha: 0.4),
               ),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
-                  color: Colors.black.withValues(alpha: 0.4),
+              alignment: Alignment.center,
+              child: const Text(
+                'Welcome to Fruit Store',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
-                alignment: Alignment.center,
-                child: const Text(
-                  'Welcome to Fruit Heaven!',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
+                textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: 8),
-            const Text(
-              'Our Selection',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            // Fruit list
-            ...fruits.map((fruit) => _buildFruitRow(fruit, context)),
-            const SizedBox(height: 16),
-          ],
-        ),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Our Selection',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 8),
+          // builds each fruit row using map()
+          ...fruits.map((fruit) => _buildFruitRow(fruit, context)),
+          const SizedBox(height: 16),
+        ],
       ),
     );
   }
 
+  // builds single fruit card with image, description, with add button
   Widget _buildFruitRow(Map<String, String> fruit, BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -95,11 +91,16 @@ class HomeScreen extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
-          BoxShadow(color: Colors.black12, blurRadius: 6, offset: Offset(0, 3)),
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6,
+            offset: const Offset(0, 3),
+          ),
         ],
       ),
       child: Row(
         children: [
+          // fruit image with error fallback
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
@@ -139,6 +140,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
+          // add button that shows a SnackBar when pressed
           IconButton(
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
