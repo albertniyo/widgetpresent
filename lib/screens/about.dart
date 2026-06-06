@@ -21,7 +21,7 @@ class AboutScreen extends StatelessWidget {
             const SizedBox(height: 20),
             const CircleAvatar(
               radius: 60,
-              backgroundImage: AssetImage('assets/images/profile.jpg'),
+              backgroundImage: AssetImage('assets/images/profile.png'),
             ),
             const SizedBox(height: 16),
             const Text(
